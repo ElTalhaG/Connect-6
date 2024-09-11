@@ -25,22 +25,22 @@ class GameBoard:
 
     def check_winner(self, player):
         color = player.color
-        # Check horizontal
+        # tjek vandret
         for r in range(self.rows):
             for c in range(self.cols - 5):
                 if all(self.board[r][c + i] == color for i in range(6)):
                     return True
-        # Check vertical
+        # tjek lodret
         for c in range(self.cols):
             for r in range(self.rows - 5):
                 if all(self.board[r + i][c] == color for i in range(6)):
                     return True
-        # Check diagonal /
+        # tjek diagonals /
         for r in range(5, self.rows):
             for c in range(self.cols - 5):
                 if all(self.board[r - i][c + i] == color for i in range(6)):
                     return True
-        # Check diagonal \
+        # tjek diagonal \
         for r in range(self.rows - 5):
             for c in range(self.cols - 5):
                 if all(self.board[r + i][c + i] == color for i in range(6)):
