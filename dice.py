@@ -1,11 +1,11 @@
-import random
 import pygame
-from constants import TERNING_FARVE, TERNING_KANT_FARVE, TEXT_FARVE, TERNING_STØRRELSE
+import random
+from constants import DICE_SIZE
 
 class Dice:
     def __init__(self):
-        self.current_value = 1
-    
+        self.current_value = None
+
     def roll(self):
         roll = random.randint(1, 10)
         if roll in [1, 2, 3]:
@@ -20,17 +20,10 @@ class Dice:
             self.current_value = '+1'
         return self.current_value
 
-    def draw(self, screen, position):
-        # Tegn terning (en firkant)
-        pygame.draw.rect(screen, TERNING_FARVE, (position[0], position[1], TERNING_STØRRELSE, TERNING_STØRRELSE))
-        pygame.draw.rect(screen, TERNING_KANT_FARVE, (position[0], position[1], TERNING_STØRRELSE, TERNING_STØRRELSE), 5)
-
-        # Vis terningens resultat som tekst
-        font = pygame.font.SysFont(None, 55)
-        if isinstance(self.current_value, int):
-            text = font.render(str(self.current_value), True, TEXT_FARVE)
-        else:
-            text = font.render(self.current_value, True, TEXT_FARVE)
-        
-        text_rect = text.get_rect(center=(position[0] + TERNING_STØRRELSE // 2, position[1] + TERNING_STØRRELSE // 2))
+    def draw(self, screen, x, y, size, color):
+        pygame.draw.rect(screen, color, (x, y, size, size))
+        pygame.draw.rect(screen, (0, 0, 0), (x, y, size, size), 3)
+        font = pygame.font.SysFont(None, 36)
+        text = font.render(str(self.current_value), True, (0, 0, 0))
+        text_rect = text.get_rect(center=(x + size // 2, y + size // 2))
         screen.blit(text, text_rect)
